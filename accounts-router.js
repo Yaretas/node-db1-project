@@ -8,9 +8,18 @@ const router = express.Router();
 router.get("/", (req, res) => {
     //get data from the db
     //Send data back
-    res.status(200).json({
-        data: "none"
-    });
+    // Queries - SELECT * from post;
+    db.select('*').from('accounts') // This will return a promise :)
+        .then(rows => {
+            res.status(200).json({
+                accounts: rows
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: 'Sorry :( ran into an error!'
+            })
+        })
 });
 
 router.get("/:id", (req, res) => {});
